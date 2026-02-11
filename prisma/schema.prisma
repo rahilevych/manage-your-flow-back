@@ -1,6 +1,6 @@
 generator client {
-  provider     = "prisma-client-js"
-  output       = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -17,9 +17,9 @@ model User {
 
   memberships     Member[]
   ownedWorkSpaces Workspace[]
-  tasksCreated    Task[]         @relation("CreatedTasks")
-  tasksAssigned   Task[]         @relation("AssignedTasks")
-  refreshTokens   RefreshToken[]
+  tasksCreated    Task[]        @relation("CreatedTasks")
+  tasksAssigned   Task[]        @relation("AssignedTasks")
+  refreshToken    RefreshToken?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -105,9 +105,10 @@ model Task {
 
 model RefreshToken {
   id     String @id @default(uuid())
-  token  String @unique
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+  token  String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   expiresAt DateTime
   createdAt DateTime @default(now())
