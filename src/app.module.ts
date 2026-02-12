@@ -7,6 +7,8 @@ import { DatabaseModule } from './database/database.module';
 import { JwtAuthModule } from './jwt-auth/jwt-auth.module';
 import { UsersModule } from './users/users.module';
 import { TokensModule } from './tokens/tokens.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
+import { MembersModule } from './members/members.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { TokensModule } from './tokens/tokens.module';
     JwtAuthModule,
     UsersModule,
     TokensModule,
+    WorkspacesModule,
+    MembersModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseService],
