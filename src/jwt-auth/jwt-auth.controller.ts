@@ -21,6 +21,7 @@ import {
 import { LoginDto } from './dto/login-user.dto';
 import type { Request, Response } from 'express';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { LoggedUser } from 'src/users/decorators/logged-user.decorator';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -141,9 +142,8 @@ export class JwtAuthController {
     status: 401,
     description: 'Unauthorized - Invalid or missing Access Token.',
   })
-  getMe(@Req() req) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return req.user;
+  getMe(@LoggedUser() user: LoggedUser) {
+    return user;
   }
 
   @Post('logout')
