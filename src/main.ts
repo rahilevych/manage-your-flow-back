@@ -24,10 +24,10 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.use(cookieParser());
   const config = new DocumentBuilder()
-    .setTitle('devFlow')
+    .setTitle('Manage your flow app')
     .setDescription('devFlow API')
     .setVersion('1.0')
-    .addTag('devFlow')
+    .addTag('Manage your flow app')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);

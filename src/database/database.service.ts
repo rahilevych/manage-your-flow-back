@@ -11,7 +11,7 @@ export class DatabaseService
   constructor(configService: ConfigService) {
     super({
       adapter: new PrismaNeon({
-        connectionString: configService.get<string>('DB_URL')!,
+        connectionString: configService.get<string>('DATABASE_URL')!,
       }),
     });
   }
