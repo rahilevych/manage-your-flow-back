@@ -10,9 +10,9 @@ import {
 import slugify from 'slugify';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { DatabaseService } from 'src/database/database.service';
-import { MemberRole } from '@prisma/client';
+
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
-import { Prisma } from 'src/generated/prisma/client';
+import { MemberRole, Prisma } from 'src/generated/prisma/client';
 
 @Injectable()
 export class WorkspacesService {

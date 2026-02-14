@@ -11,11 +11,12 @@ import { RegisterDto } from './dto/create-user.dto';
 import argon2d from 'argon2';
 import { UsersService } from 'src/users/users.service';
 import { ConfigService } from '@nestjs/config';
-import { Member } from '@prisma/client';
+
 import { JwtService } from '@nestjs/jwt';
 import { TokensService } from 'src/tokens/tokens.service';
 import { LoginDto } from './dto/login-user.dto';
 import { JwtPayload } from './jwt.strategy';
+import { Member } from 'src/generated/prisma/client';
 
 @Injectable()
 export class JwtAuthService {
