@@ -50,7 +50,7 @@ export class JwtAuthController {
     const data = await this.jwtAuthService.register(dto);
     res.cookie('refreshToken', data?.tokens.refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'lax',
       maxAge: 15 * 24 * 60 * 60 * 1000,
     });
@@ -84,7 +84,7 @@ export class JwtAuthController {
     const data = await this.jwtAuthService.login(dto);
     res.cookie('refreshToken', data?.refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'lax',
       maxAge: 15 * 24 * 60 * 60 * 1000,
     });
@@ -121,7 +121,7 @@ export class JwtAuthController {
     const tokens = await this.jwtAuthService.refreshTokens(token);
     res.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'lax',
     });
 
