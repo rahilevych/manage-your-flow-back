@@ -48,12 +48,14 @@ enum MemberRole {
 }
 
 model Member {
-  id          String     @id @default(uuid())
-  role        MemberRole @default(MEMBER)
-  userId      String
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspaceId String
-  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  id              String     @id @default(uuid())
+  role            MemberRole @default(MEMBER)
+  userId          String
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdProjects Project[]  @relation("CreatedProjects")
+  workspaceId     String
+  workspace       Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  projects        Project[]  @relation("ProjectMembers")
 
   @@unique([userId, workspaceId])
 }
@@ -61,10 +63,14 @@ model Member {
 model Project {
   id          String    @id @default(uuid())
   name        String
+  description String?
   key         String
   workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   tasks       Task[]
+  members     Member[]  @relation("ProjectMembers")
+  creatorId   String
+  creator     Member    @relation("CreatedProjects", fields: [creatorId], references: [id])
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
