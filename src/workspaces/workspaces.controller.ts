@@ -25,12 +25,12 @@ import { WorkspaceEntity } from './entities/workspace.entity';
 
 @ApiTags('workspaces')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('workspaces')
 export class WorkspacesController {
   constructor(private workspaceService: WorkspacesService) {}
 
   @Post('')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new workspace' })
   @ApiResponse({
     status: 201,
@@ -45,7 +45,6 @@ export class WorkspacesController {
     return workspace;
   }
   @Get('')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get all user workspaces' })
   @ApiResponse({
     status: 200,
@@ -58,17 +57,15 @@ export class WorkspacesController {
     return workspaces;
   }
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get workspace by ID' })
   @ApiResponse({ status: 200, type: WorkspaceEntity })
   @ApiResponse({ status: 404, description: 'Workspace not found' })
   async getById(@Param('id') id: string) {
     const workspace = await this.workspaceService.getById(id);
-    console.log(workspace);
+
     return workspace;
   }
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete a workspace' })
   @ApiParam({ name: 'id', description: 'The UUID of the workspace to delete' })
   @ApiResponse({
@@ -88,7 +85,6 @@ export class WorkspacesController {
     return deleted;
   }
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update workspace details' })
   @ApiParam({ name: 'id', description: 'The UUID of the workspace to update' })
   @ApiResponse({
