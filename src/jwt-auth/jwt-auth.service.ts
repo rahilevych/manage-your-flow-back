@@ -62,18 +62,16 @@ export class JwtAuthService {
     await this.tokensService.deleteTokenFromDB(refreshToken);
   }
 
-  async generateTokens(userId: string, member?: Member) {
+  async generateTokens(userId: string) {
     if (!userId) throw new BadRequestException('User id is not provided');
     const user = await this.usersService.findUserById(userId);
     const payload = {
-      sub: user?.id,
+      id: user?.id,
       email: user?.email,
-      memberId: member?.id,
-      role: member?.role,
     };
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('JWT_SECRET'),
-      expiresIn: '1m',
+      expiresIn: '15m',
     });
     const refreshToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('JWT_SECRET'),
@@ -97,7 +95,7 @@ export class JwtAuthService {
   }
   async refreshTokens(refreshToken: string, member?: Member) {
     const payload = await this.verifyTokens(refreshToken);
-    const tokens = await this.generateTokens(payload.sub, member);
+    const tokens = await this.generateTokens(payload.id);
 
     return tokens;
   }

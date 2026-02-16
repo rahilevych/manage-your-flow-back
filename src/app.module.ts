@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { TokensModule } from './tokens/tokens.module';
 import { WorkspacesModule } from './workspaces/workspaces.module';
 import { MembersModule } from './members/members.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MembersModule } from './members/members.module';
     TokensModule,
     WorkspacesModule,
     MembersModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseService],
