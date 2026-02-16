@@ -4,10 +4,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 export interface JwtPayload {
-  sub: string;
+  id: string;
   email: string;
-  memberId: string;
-  role: string;
 }
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -21,10 +19,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   // eslint-disable-next-line @typescript-eslint/require-await
   async validate(payload: JwtPayload) {
     return {
-      userId: payload.sub,
+      userId: payload.id,
       email: payload.email,
-      memberId: payload.memberId,
-      role: payload.role,
     };
   }
 }
