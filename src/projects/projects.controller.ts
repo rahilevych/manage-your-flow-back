@@ -15,7 +15,7 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { MemberRole } from '@prisma/client';
+
 import { Roles } from 'src/jwt-auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/jwt-auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/jwt-auth/guards/roles.guard';
@@ -23,6 +23,7 @@ import { ProjectsService } from './projects.service';
 import { LoggedUser } from 'src/users/decorators/logged-user.decorator';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { MemberRole } from 'src/generated/prisma/enums';
 
 @ApiTags('Projects')
 @ApiBearerAuth()

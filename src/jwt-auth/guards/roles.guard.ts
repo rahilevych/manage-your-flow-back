@@ -7,8 +7,9 @@ import {
 import { Reflector } from '@nestjs/core';
 import { DatabaseService } from 'src/database/database.service';
 import { LoggedUser } from 'src/users/decorators/logged-user.decorator';
-import { MemberRole } from '@prisma/client';
+
 import { MembersService } from 'src/members/members.service';
+import { MemberRole } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
