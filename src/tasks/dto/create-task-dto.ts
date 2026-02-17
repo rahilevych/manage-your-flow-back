@@ -7,7 +7,7 @@ import {
   IsDateString,
   MinLength,
 } from 'class-validator';
-import { TaskStatus, Priority } from '@prisma/client';
+import { Priority, TaskStatus } from 'src/generated/prisma/enums';
 
 export class CreateTaskDto {
   @ApiProperty({
