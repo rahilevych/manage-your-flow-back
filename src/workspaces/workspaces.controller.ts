@@ -109,4 +109,8 @@ export class WorkspacesController {
     const update = await this.workspaceService.update(id, userId, dto);
     return update;
   }
+  @Get(':id/stats')
+  async getWorkspaceStats(@Param('id') id: string) {
+    return this.workspaceService.getStats(id);
+  }
 }

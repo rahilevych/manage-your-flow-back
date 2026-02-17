@@ -86,6 +86,7 @@ export class WorkspacesService {
       },
     });
   }
+
   async update(id: string, userId: string, dto: UpdateWorkspaceDto) {
     const [workspace, nameDublicate] = await Promise.all([
       this.db.workspace.findUnique({ where: { id } }),
@@ -115,5 +116,42 @@ export class WorkspacesService {
         name: dto.name,
       },
     });
+  }
+
+  async getStats(workspaceId: string) {
+    const [projectsCount, membersCount, tasksStats, highPriorityCount] =
+      await Promise.all([
+        this.db.project.count({ where: { workspaceId } }),
+        this.db.member.count({ where: { workspaceId } }),
+        this.db.task.groupBy({
+          by: ['status'],
+          where: { project: { workspaceId } },
+          _count: { _all: true },
+        }),
+        this.db.task.count({
+          where: {
+            project: { workspaceId },
+            priority: 'HIGH',
+            status: { not: 'DONE' },
+          },
+        }),
+      ]);
+
+    const totalTasks = tasksStats.reduce(
+      (acc, curr) => acc + curr._count._all,
+      0,
+    );
+    const completedTasks =
+      tasksStats.find((s) => s.status === 'DONE')?._count._all || 0;
+
+    return {
+      projectsCount,
+      membersCount,
+      tasksCount: totalTasks,
+      completedTasks,
+      highPriorityCount,
+      completionRate:
+        totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0,
+    };
   }
 }
