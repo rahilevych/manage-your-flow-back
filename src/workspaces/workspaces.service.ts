@@ -61,7 +61,13 @@ export class WorkspacesService {
   async getAll(userId: string) {
     if (!userId) throw new UnauthorizedException('Unauthorized');
     return await this.db.workspace.findMany({
-      where: { ownerId: userId },
+      where: {
+        members: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
       select: {
         id: true,
         name: true,
